@@ -21,13 +21,15 @@ LinkList:
 
     getVal(index: int) -> object
 
+[归纳总结]
+对链表进行增删改查时，首先注意表空以及索引越界问题；
+之后的操作若包含拆除指针，应该先填写新节点，之后拆除旧链接。
 """
 
 
 class LinkList:
     def __init__(self):
         self.head = None
-        self.val = None
         self._length = 0
 
     @property
@@ -50,6 +52,34 @@ class LinkList:
         """
         return self.head.next is None
 
+    def setVal(self, index: int, val: object) -> bool:
+        # 表空 -> 设置失败
+        if self.isEmpty():
+            return False
+
+        # 表非空 && 越界 -> 设置失败
+        if index < 0 or index > self._length:
+            return False
+
+        current = self.head
+        for i in range(0, index):
+            current = current.next
+
+        current.val = val
+
+        return True
+
+    def getVal(self, index: int) -> object:
+        # 表非空 && 越界
+        if not self.isEmpty() and (index < 0 or index > self._length):
+            return False
+
+        current = self.head
+        for i in range(0, index):
+            current = current.next
+
+        return current.val
+
     def addAtIndex(self, index: int, val: object) -> bool:
         pass
 
@@ -60,10 +90,4 @@ class LinkList:
         pass
 
     def delete(self, index: int) -> bool:
-        pass
-
-    def setVal(self, index: int, val: object) -> bool:
-        pass
-
-    def getVal(self, index: int) -> object:
         pass

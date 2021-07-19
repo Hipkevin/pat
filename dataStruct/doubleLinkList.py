@@ -1,41 +1,34 @@
-from dataStruct.node import SingleLinkNode
+from dataStruct.node import DoubleLinkNode
 from dataStruct.abstract import LinkList
 
 
-class SingleLinkList(LinkList):
+class DoubleLinkList(LinkList):
     def __init__(self):
-        super(SingleLinkList, self).__init__()
+        super(DoubleLinkList, self).__init__()
 
-        # 初始化头节点
-        self.head = SingleLinkNode()
+        self.head = DoubleLinkNode()
 
-    def __str__(self):
-        string = 'head -> '
+    def isEmpty(self) -> bool:
+        """
+        Time: O(1)
+        Space: O(1)
 
-        if not self.isEmpty():
-            current = self.head.next
-            while current is not None:
-                string += str(current.val) + ' -> '
-                current = current.next
-
-        return string
+        :return: empty->Ture | ^empty->False
+        """
+        return self.head.next is None and self.head.pre is None
 
     def addAtIndex(self, index: int, val: object) -> bool:
         """
-        将新元素插入第index位之后
-        index范围是[0, length]
+        在index节点后插入新节点
 
-        表为空：作为第一个元素
-        表非空 && 未越界：插入指定位置并返回True，否则返回False
+        空表判断和越界判断与单向链表相同
 
-        Time: O(n)
-        Space: O(1)
+        插入新节点时，通过current指针移动到index位置
 
         :param index: 插入位置
-        :param val: 新节点的值
+        :param val: 新节点值
         :return: 是否插入成功
         """
-
         if index < 0 or index > self._length:
             # 表非空 && 越界 -> 插入失败
             if not self.isEmpty():
@@ -45,7 +38,7 @@ class SingleLinkList(LinkList):
             else:
                 index = 0
 
-        new_node = SingleLinkNode(val)
+        new_node = DoubleLinkNode(val)
 
         # 下标从0开始，current指针位于头节点上
         # 移动current指针至index
@@ -53,7 +46,13 @@ class SingleLinkList(LinkList):
         for i in range(0, index):
             current = current.next
 
+        # 填写new_node的链接域
         new_node.next = current.next
+        new_node.pre = current
+
+        # 将当前节点的next指向new_node
+        # 必须先将current的后置节点的pre指针指向new_node
+        current.next.pre = new_node
         current.next = new_node
 
         self._set_length += 1
@@ -61,36 +60,36 @@ class SingleLinkList(LinkList):
 
     def addAtHead(self, val: object) -> None:
         """
-        在表头节点后插入节点
+        在头部插入新节点
 
-        Time: O(1)
-        Space: O(1)
+        插入过程与在指定位置插入相同
 
         :param val: 新节点值
         """
-        new_node = SingleLinkNode(val)
+        new_node = DoubleLinkNode(val)
 
         new_node.next = self.head.next
+        new_node.pre = self.head
+
+        self.head.next.pre = new_node
         self.head.next = new_node
 
         self._set_length += 1
 
     def addAtTail(self, val: object) -> None:
         """
-        在链表结尾插入节点
-
-        Time: O(n)
-        Space: O(1)
+        在链表结尾插入新节点
 
         :param val: 新节点值
         """
-        new_node = SingleLinkNode(val)
+        new_node = DoubleLinkNode(val)
 
         # 移动current指针至最后一个节点
         current = self.head
         while current.next is not None:
             current = current.next
 
+        new_node.pre = current
         current.next = new_node
 
         self._set_length += 1
@@ -99,13 +98,7 @@ class SingleLinkList(LinkList):
         """
         删除指定位置的节点
 
-        表为空：返回True
-        表非空 && 未越界：删除指定位置元素并返回True，否则返回False
-
-        Time: O(n)
-        Space: O(1)
-
-        :param index: 待删除节点的位置
+        :param index: 待删除的节点位置
         :return: 是否删除成功
         """
         if self.isEmpty():
@@ -117,21 +110,24 @@ class SingleLinkList(LinkList):
         else:
             # current指针从头节点出发，移动至index-1
             current = self.head
-            for i in range(0, index-1):
+            for i in range(0, index - 1):
                 current = current.next
 
+            # 最后操作current指针
+            # 否则current指针改变，后续修改会发生错误
+            current.next.next.pre = current
             current.next = current.next.next
 
         self._set_length -= 1
         return True
 
     def display(self) -> None:
-        print('head -> ', end='')
+        print('head <-> ', end='')
 
         if not self.isEmpty():
             current = self.head.next
             while current is not None:
-                print(current.val, '-> ', end='')
+                print(current.val, '<-> ', end='')
                 current = current.next
 
             print()
