@@ -4,9 +4,9 @@ from dataStruct.doubleLinkList import DoubleLinkList
 
 class DoubleLinkListTest(unittest.TestCase):
     """
-    单向链表单元测试类
+    双向链表单元测试类
 
-    对单向链表的基本操作进行覆盖测试
+    对双向链表的基本操作进行覆盖测试
     """
 
     def test_isEmpty(self):
