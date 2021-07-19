@@ -8,6 +8,17 @@ class DoubleLinkList(LinkList):
 
         self.head = DoubleLinkNode()
 
+    def __str__(self):
+        string = 'head <-> '
+
+        if not self.isEmpty():
+            current = self.head.next
+            while current is not None:
+                string += str(current.val) + ' <-> '
+                current = current.next
+
+        return string
+
     def isEmpty(self) -> bool:
         """
         Time: O(1)
@@ -52,7 +63,8 @@ class DoubleLinkList(LinkList):
 
         # 将当前节点的next指向new_node
         # 必须先将current的后置节点的pre指针指向new_node
-        current.next.pre = new_node
+        if current.next:
+            current.next.pre = new_node
         current.next = new_node
 
         self._set_length += 1
@@ -71,7 +83,9 @@ class DoubleLinkList(LinkList):
         new_node.next = self.head.next
         new_node.pre = self.head
 
-        self.head.next.pre = new_node
+        if not self.isEmpty():
+            self.head.next.pre = new_node
+
         self.head.next = new_node
 
         self._set_length += 1
@@ -115,7 +129,9 @@ class DoubleLinkList(LinkList):
 
             # 最后操作current指针
             # 否则current指针改变，后续修改会发生错误
-            current.next.next.pre = current
+            if current.next.next:
+                current.next.next.pre = current
+
             current.next = current.next.next
 
         self._set_length -= 1

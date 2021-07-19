@@ -1,5 +1,4 @@
 import unittest
-
 from dataStruct.singleLinkList import SingleLinkList
 
 class SingleLinkListTest(unittest.TestCase):
