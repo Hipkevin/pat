@@ -1,114 +1,12 @@
 """
-单向链表、双向链表、循环链表的py实现
+单向链表的py实现
 
 @author: kevin
 """
 
-"""
-链表节点ADT设计
+from node import SingleLinkNode
+from abstract import LinkList
 
-SingleLinkNode:
-    next: SingleLinkNode  # 链接域
-    val: object  # 数据域
-
-DoubleLinkNode:
-    pre: DoubleLinkNode  # 前置节点
-    next: DoubleLinkNode  # 后置节点
-    val: Object
-"""
-
-class SingleLinkNode:
-    def __init__(self, *args):
-        super(SingleLinkNode, self).__init__()
-
-        self.next = None
-
-        if args:
-            self.val = args[0]
-        else:
-            self.val = None
-
-class DoubleLinkNode:
-    def __init__(self, *args):
-        super(DoubleLinkNode, self).__init__()
-
-        self.pre = None
-        self.next = None
-
-        if args:
-            self.val = args[0]
-        else:
-            self.val = None
-
-
-"""
-基类链表ADT设计
-
-[NOTE] 头节点链接域为空时，认为链表为空，长度为0；头节点为第0个元素
-
-LinkList:
-    head: *LinkNode
-    val: object
-    length: int
-    
-    isEmpty() -> bool
-    display() -> None
-    
-    addAtIndex(index: int, val: object) -> bool
-    addAtHead(val: object) -> None
-    addAtTail(val: object) -> None
-    
-    delete(index: int) -> bool
-    
-    setVal(index: int, val: object) -> bool
-    
-    getVal(index: int) -> object
-    
-"""
-
-class LinkList:
-    def __init__(self):
-        self.head = None
-        self.val = None
-        self._length = 0
-
-    @property
-    def length(self):
-        return self._length
-
-    @length.setter
-    def _set_length(self, l):
-        self._length = l
-
-    def __len__(self):
-        return self._length
-
-    def isEmpty(self) -> bool:
-        """
-        Time: O(1)
-        Space: O(1)
-
-        :return: empty->Ture | ^empty->False
-        """
-        return self.head.next is None
-
-    def addAtIndex(self, index: int, val: object) -> bool:
-        pass
-
-    def addAtHead(self, val: object) -> None:
-        pass
-
-    def addAtTail(self, val: object) -> None:
-        pass
-
-    def delete(self, index: int) -> bool:
-        pass
-
-    def setVal(self, index:int, val: object) -> bool:
-        pass
-
-    def getVal(self, index: int) -> object:
-        pass
 
 class SingleLinkList(LinkList):
     def __init__(self):
@@ -135,6 +33,9 @@ class SingleLinkList(LinkList):
 
         表为空：作为第一个元素
         表非空 && 未越界：插入指定位置并返回True，否则返回False
+
+        Time: O(n)
+        Space: O(1)
 
         :param index: 插入位置
         :param val: 新节点的值
@@ -168,6 +69,9 @@ class SingleLinkList(LinkList):
         """
         在表头节点后插入节点
 
+        Time: O(1)
+        Space: O(1)
+
         :param val: 新节点值
         """
         new_node = SingleLinkNode(val)
@@ -180,6 +84,9 @@ class SingleLinkList(LinkList):
     def addAtTail(self, val: object) -> None:
         """
         在链表结尾插入节点
+
+        Time: O(n)
+        Space: O(1)
 
         :param val: 新节点值
         """
@@ -200,8 +107,12 @@ class SingleLinkList(LinkList):
 
         表为空：返回True
         表非空 && 未越界：删除指定位置元素并返回True，否则返回False
+
+        Time: O(n)
+        Space: O(1)
+
         :param index: 待删除节点的位置
-        :return:
+        :return: 是否删除成功
         """
         if self.isEmpty():
             return True
@@ -258,4 +169,3 @@ class SingleLinkList(LinkList):
                 current = current.next
 
             print()
-

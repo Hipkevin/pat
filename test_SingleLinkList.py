@@ -1,6 +1,6 @@
 import unittest
 
-from dataStruct.linkList import SingleLinkList
+from dataStruct.singleLinkList import SingleLinkList
 
 class SingleLinkListTest(unittest.TestCase):
     """
