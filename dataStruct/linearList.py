@@ -1,14 +1,17 @@
 class LinearList:
-    def __init__(self, max_space_size):
+    def __init__(self, max_space_size=10):
         super(LinearList, self).__init__()
 
-        self.data = [0] * max_space_size
+        self.data = [None] * max_space_size
         self.max_space_size = max_space_size
 
         self._length = 0
 
     def __len__(self):
         return self._length
+
+    def __str__(self):
+        return str(self.data[0: self._length])
 
     @property
     def length(self):
@@ -27,7 +30,7 @@ class LinearList:
 
         :return: 表空 -> True | 表非空 -> False
         """
-        return not bool(self.data)
+        return self.data[0] is None
 
     def findByIndex(self, index: int) -> object:
         """
@@ -39,7 +42,7 @@ class LinearList:
         :param index: 查询索引
         :return: 相应元素，查询失败返回None
         """
-        if index > self._length:
+        if index < 0 or index > self._length:
             return None
         else:
             return self.data[index]
@@ -71,7 +74,7 @@ class LinearList:
         Space: O(1)
 
         :param val: 查询值
-        :return: 结果索引，查询失败返回-1
+        :return: 结果索引，查询失败返回None
         """
 
         for idx, d in enumerate(self.data):
@@ -79,7 +82,7 @@ class LinearList:
                 return idx
         else:
             # for循环正常执行(无break、return等中断操作)
-            return -1
+            return None
 
     def insert(self, index: int, val) -> bool:
         """
@@ -142,4 +145,3 @@ class LinearList:
 
             self._length -= 1
             return True
-
