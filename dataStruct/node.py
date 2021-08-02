@@ -33,3 +33,18 @@ class DoubleLinkNode:
             self.val = args[0]
         else:
             self.val = None
+
+class BinaryLinkNode:
+    def __init__(self, *args):
+        super(BinaryLinkNode, self).__init__()
+
+        self.left = None
+        self.right = None
+
+        if args:
+            self.val = args[0]
+        else:
+            self.val = None
+
+    def __str__(self):
+        return f"{self.val}"
