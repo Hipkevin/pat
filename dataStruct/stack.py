@@ -50,11 +50,11 @@ class LinearStack(Stack):
 
         else:
             res = self.data.findByIndex(0)
-            self.data.delete(0)
+            self.data.delete(1)
             return res
 
 class LinkStack(Stack):
-    def __init__(self, max_space_size):
+    def __init__(self, max_space_size=10):
         super(LinkStack, self).__init__()
 
         self.max_space_size = max_space_size

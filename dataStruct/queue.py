@@ -47,10 +47,11 @@ class LinearQueue(Queue):
             return None
 
         else:
-            res = self.data.findByIndex(self.data.length-1)
-            self.data.delete(self.data.length-1)
+            res = self.data.findByIndex(0)
+            self.data.delete(0)
 
             return res
+
 
 class LinkQueue(Queue):
     def __init__(self, max_space_size=10):
@@ -75,6 +76,38 @@ class LinkQueue(Queue):
             return None
 
         else:
-            res = self.data.getVal(self.data.length)
-            self.data.delete(self.data.length)
+            res = self.data.getVal(0)
+            self.data.delete(0)
             return res
+
+class BaseQueue(Queue):
+    def __init__(self, max_space_size=10):
+        self.data = [None] * (max_space_size + 1)
+        self.max_space_size = max_space_size
+
+        self.__front = 0
+        self.__tail = 0
+
+    def isEmpty(self) -> bool:
+        return self.__front == self.__tail
+
+    def isFull(self) -> bool:
+        return self.__front == (self.__tail + 1) % (self.max_space_size + 1)
+
+    def push(self, val: object) -> bool:
+        if self.isFull():
+            return False
+
+        else:
+            self.__tail = (self.__tail + 1) % (self.max_space_size + 1)
+            self.data[self.__tail] = val
+            return True
+
+    def pop(self) -> object:
+        if self.isEmpty():
+            return None
+
+        else:
+            self.__front = (self.__front + 1) % (self.max_space_size + 1)
+
+            return self.data[self.__front]

@@ -74,7 +74,7 @@ class LinkList:
         if not self.isEmpty() and (index < 0 or index > self._length):
             return False
 
-        current = self.head
+        current = self.head.next
         for i in range(0, index):
             current = current.next
 

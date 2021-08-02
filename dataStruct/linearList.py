@@ -121,6 +121,7 @@ class LinearList:
     def delete(self, index: int) -> bool:
         """
         删除指定位置的元素
+        下标从1开始
 
         表空: 返回True
         表非空 && 越界: 返回False
@@ -140,7 +141,7 @@ class LinearList:
             return False
 
         else:
-            for i in range(index, self._length):
+            for i in range(index, self._length-1):
                 self.data[i] = self.data[i + 1]
 
             self._length -= 1
