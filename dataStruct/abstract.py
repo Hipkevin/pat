@@ -105,7 +105,7 @@ class Graph:
     """
 
     def __init__(self):
-        super(Graph, self).__int__()
+        super(Graph, self).__init__()
 
         self._adjacent = None
         self.data = None
@@ -114,8 +114,8 @@ class Graph:
     def adjacent(self):
         return self._adjacent
 
-    def DFSTraverse(self) -> list:
+    def DFSTraverse(self, start) -> list:
         pass
 
-    def BFSTraverse(self) -> list:
+    def BFSTraverse(self, start) -> list:
         pass
